@@ -77,3 +77,19 @@ func TestNM(T *testing.T) {
 	aN := a.Negative()
 	PrintMatrix(a, aN)
 }
+
+func TestMutliAdd(T *testing.T) {
+	a := NewMatrixEye(4)
+	b := NewMatrixOnes(4)
+	c := NewMatrixZeros(4)
+	d := MatrixAddition(a, b, c)
+	PrintMatrix(d)
+}
+
+func TestMutliSub(T *testing.T) {
+	a := NewMatrixEye(4)
+	b := NewMatrixOnes(4)
+	c := NewMatrixZeros(4)
+	d := MatrixSubtraction(a, b, c)
+	PrintMatrix(d)
+}
