@@ -66,6 +66,14 @@ func TestTranM(T *testing.T) {
 	dataA := [][]float64{{1}, {2}, {3}, {4}}
 	a := NewMatrix(dataA)
 
-	aT := a.TransposeMatrix()
+	aT := a.Transpose()
 	PrintMatrix(a, aT)
+}
+
+func TestNM(T *testing.T) {
+	dataA := [][]float64{{1}, {2}, {3}, {4}}
+	a := NewMatrix(dataA)
+
+	aN := a.Negative()
+	PrintMatrix(a, aN)
 }

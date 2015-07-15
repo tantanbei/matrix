@@ -185,7 +185,7 @@ func PrintMatrix(m ...*Matrix) {
 	}
 }
 
-func (m Matrix) TransposeMatrix() *Matrix {
+func (m Matrix) Transpose() *Matrix {
 	mT := new(Matrix)
 	mT.col = m.row
 	mT.row = m.col
@@ -197,4 +197,18 @@ func (m Matrix) TransposeMatrix() *Matrix {
 		mT.realData = append(mT.realData, row)
 	}
 	return mT
+}
+
+func (m Matrix) Negative() *Matrix {
+	mN := new(Matrix)
+	mN.col = m.col
+	mN.row = m.row
+	for i := 0; i < m.row; i++ {
+		row := make([]float64, 0)
+		for j := 0; j < m.col; j++ {
+			row = append(row, -m.realData[i][j])
+		}
+		mN.realData = append(mN.realData, row)
+	}
+	return mN
 }
