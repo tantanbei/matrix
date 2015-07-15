@@ -117,3 +117,17 @@ func (m Matrix) Negative() *Matrix {
 	}
 	return mN
 }
+
+func MatrixAddFloat(a *Matrix, b float64) *Matrix {
+	m := new(Matrix)
+	m.col = a.col
+	m.row = a.row
+	for i := 0; i < m.row; i++ {
+		row := make([]float64, 0)
+		for j := 0; j < m.col; j++ {
+			row = append(row, a.realData[i][j]+b)
+		}
+		m.realData = append(m.realData, row)
+	}
+	return m
+}

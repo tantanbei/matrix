@@ -93,3 +93,9 @@ func TestMutliSub(T *testing.T) {
 	d := MatrixSubtraction(a, b, c)
 	PrintMatrix(d)
 }
+
+func TestAddFloat(T *testing.T) {
+	a := NewMatrixOnes(2)
+	b := MatrixAddFloat(a, -1.9)
+	PrintMatrix(b)
+}
