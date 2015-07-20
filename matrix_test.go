@@ -133,6 +133,6 @@ func TestDiagonal(T *testing.T) {
 
 func TestByMatlab(T *testing.T) {
 	m := NewMatrixByMatlab("[1 2 3;4 5 6]")
-	m1 := NewMatrixByMatlab("[1,2;3,4;5,6]")
+	m1 := NewMatrixByMatlab("[1.5,2.6;3.06,4.33;5.5,6]")
 	PrintMatrix(m, m1)
 }
