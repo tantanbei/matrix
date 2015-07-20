@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func MatrixAddition(m ...*Matrix) *Matrix {
+func Addition(m ...*Matrix) *Matrix {
 	for i := 1; i < len(m); i++ {
 		if m[i].col != m[i-1].col || m[i].row != m[i-1].row {
 			panic("Matrixs have different size")
@@ -29,7 +29,7 @@ func MatrixAddition(m ...*Matrix) *Matrix {
 	return mat
 }
 
-func MatrixSubtraction(m ...*Matrix) *Matrix {
+func Subtraction(m ...*Matrix) *Matrix {
 	for i := 1; i < len(m); i++ {
 		if m[i].col != m[i-1].col || m[i].row != m[i-1].row {
 			panic("Matrixs have different size")
@@ -54,7 +54,7 @@ func MatrixSubtraction(m ...*Matrix) *Matrix {
 	return mat
 }
 
-func MatrixMultiplication(a *Matrix, b *Matrix) *Matrix {
+func Multiplication(a *Matrix, b *Matrix) *Matrix {
 	if a.col != b.row {
 		panic("Can not matrix multiplication!")
 	}
@@ -104,7 +104,7 @@ func (m Matrix) Transpose() *Matrix {
 	return mT
 }
 
-func (m Matrix) Negative() *Matrix {
+func (m *Matrix) Negative() *Matrix {
 	mN := new(Matrix)
 	mN.col = m.col
 	mN.row = m.row
@@ -118,6 +118,20 @@ func (m Matrix) Negative() *Matrix {
 	return mN
 }
 
+func (m *Matrix) Copy() *Matrix {
+	mC := new(Matrix)
+	mC.col = m.col
+	mC.row = m.row
+	for i := 0; i < mC.row; i++ {
+		row := make([]float64, 0)
+		for j := 0; j < mC.col; j++ {
+			row = append(row, m.realData[i][j])
+		}
+		mC.realData = append(m.realData, row)
+	}
+	return mC
+}
+
 func MatrixAddFloat(a *Matrix, b float64) *Matrix {
 	m := new(Matrix)
 	m.col = a.col
@@ -126,6 +140,48 @@ func MatrixAddFloat(a *Matrix, b float64) *Matrix {
 		row := make([]float64, 0)
 		for j := 0; j < m.col; j++ {
 			row = append(row, a.realData[i][j]+b)
+		}
+		m.realData = append(m.realData, row)
+	}
+	return m
+}
+
+func MatrixAugment(a *Matrix, b *Matrix) *Matrix {
+	if a.row != b.row {
+		panic("Augment error!")
+	}
+	m := new(Matrix)
+	m.col = a.col + b.col
+	m.row = a.row
+	for i := 0; i < m.row; i++ {
+		row := make([]float64, 0)
+		for j := 0; j < m.col; j++ {
+			if j < a.col {
+				row = append(row, a.realData[i][j])
+			} else {
+				row = append(row, b.realData[i][j-a.col])
+			}
+		}
+		m.realData = append(m.realData, row)
+	}
+	return m
+}
+
+func MatrixStack(a *Matrix, b *Matrix) *Matrix {
+	if a.row != b.row {
+		panic("Stack error!")
+	}
+	m := new(Matrix)
+	m.col = a.col
+	m.row = a.row + b.row
+	for i := 0; i < m.row; i++ {
+		row := make([]float64, 0)
+		for j := 0; j < m.col; j++ {
+			if i < a.row {
+				row = append(row, a.realData[i][j])
+			} else {
+				row = append(row, b.realData[i-a.row][j])
+			}
 		}
 		m.realData = append(m.realData, row)
 	}
