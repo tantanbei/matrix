@@ -5,12 +5,7 @@ import (
 	"strconv"
 )
 
-type Matrix struct {
-	realData [][]float64
-	row      int
-	col      int
-}
-
+//initial a new matrix by [][]float64
 func NewMatrix(data [][]float64) *Matrix {
 	m := new(Matrix)
 	m.realData = data
@@ -19,6 +14,10 @@ func NewMatrix(data [][]float64) *Matrix {
 	return m
 }
 
+//initial a zeros matrix
+//arg[0] : row of the matrix
+//arg[1] : col of the matrix
+//if arg only one , there is a n*n matrix
 func NewMatrixZeros(arg ...int) *Matrix {
 	if len(arg) > 2 {
 		panic("imput error!")
@@ -46,6 +45,10 @@ func NewMatrixZeros(arg ...int) *Matrix {
 	return m
 }
 
+//initial a ones matrix
+//arg[0] : row of the matrix
+//arg[1] : col of the matrix
+//if arg only one , there is a n*n matrix
 func NewMatrixOnes(arg ...int) *Matrix {
 	if len(arg) > 2 {
 		panic("imput error!")
@@ -73,6 +76,10 @@ func NewMatrixOnes(arg ...int) *Matrix {
 	return m
 }
 
+//initial a eye matrix
+//arg[0] : row of the matrix
+//arg[1] : col of the matrix
+//if arg only one , there is a n*n matrix
 func NewMatrixEye(arg ...int) *Matrix {
 	if len(arg) > 2 {
 		panic("imput error!")
@@ -108,6 +115,7 @@ func NewMatrixEye(arg ...int) *Matrix {
 	return m
 }
 
+//initial a normal matrix
 func NewMatrixNormal(row, col int) *Matrix {
 	if row < 1 || col < 1 {
 		panic("create random matrix error!")
@@ -125,6 +133,7 @@ func NewMatrixNormal(row, col int) *Matrix {
 	return m
 }
 
+//initial a diagonal matrix by []floate64
 func NewMatrixDiagonal(data []float64) *Matrix {
 	if len(data) < 1 {
 		panic("create diagonal matrix error!")
@@ -146,6 +155,9 @@ func NewMatrixDiagonal(data []float64) *Matrix {
 	return m
 }
 
+//initial a matrix by matlab protocal
+//eg [1 2;2 3;3 4]
+//   [1,2;2,3;3,4]
 func NewMatrixByMatlab(cmd string) *Matrix {
 	rn := []rune(cmd)
 	if rn[0] != '[' || rn[len(rn)-1] != ']' {

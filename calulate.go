@@ -1,9 +1,7 @@
 package matrix
 
-import (
-	"fmt"
-)
-
+//addition the some matrix
+//eg D = A + B + C
 func Addition(m ...*Matrix) *Matrix {
 	for i := 1; i < len(m); i++ {
 		if m[i].col != m[i-1].col || m[i].row != m[i-1].row {
@@ -29,6 +27,8 @@ func Addition(m ...*Matrix) *Matrix {
 	return mat
 }
 
+//subtraction the matrix in order
+//eg D = A - B - C
 func Subtraction(m ...*Matrix) *Matrix {
 	for i := 1; i < len(m); i++ {
 		if m[i].col != m[i-1].col || m[i].row != m[i-1].row {
@@ -54,6 +54,8 @@ func Subtraction(m ...*Matrix) *Matrix {
 	return mat
 }
 
+//multiplication the double matrix
+//eg C = A * B
 func Multiplication(a *Matrix, b *Matrix) *Matrix {
 	if a.col != b.row {
 		panic("Can not matrix multiplication!")
@@ -78,18 +80,9 @@ func Multiplication(a *Matrix, b *Matrix) *Matrix {
 	return m
 }
 
-func PrintMatrix(m ...*Matrix) {
-	for _, mat := range m {
-		for i := 0; i < mat.row; i++ {
-			for j := 0; j < mat.col; j++ {
-				fmt.Print(mat.realData[i][j], "	")
-			}
-			fmt.Println()
-		}
-		fmt.Println()
-	}
-}
-
+//transpose this matrix
+//the original matrix can not change
+//eg B = AT(transpose)
 func (m Matrix) Transpose() *Matrix {
 	mT := new(Matrix)
 	mT.col = m.row
@@ -104,6 +97,9 @@ func (m Matrix) Transpose() *Matrix {
 	return mT
 }
 
+//negative this matrix
+//the original matrix can not change
+//eg B = -A
 func (m *Matrix) Negative() *Matrix {
 	mN := new(Matrix)
 	mN.col = m.col
@@ -118,6 +114,8 @@ func (m *Matrix) Negative() *Matrix {
 	return mN
 }
 
+//copy this matrix
+//the original can not change
 func (m *Matrix) Copy() *Matrix {
 	mC := new(Matrix)
 	mC.col = m.col
@@ -132,6 +130,8 @@ func (m *Matrix) Copy() *Matrix {
 	return mC
 }
 
+//the matrix add a float
+//eg B = A + 0.5
 func MatrixAddFloat(a *Matrix, b float64) *Matrix {
 	m := new(Matrix)
 	m.col = a.col
@@ -146,6 +146,8 @@ func MatrixAddFloat(a *Matrix, b float64) *Matrix {
 	return m
 }
 
+//augment the double matrix
+//eg [a b]
 func MatrixAugment(a *Matrix, b *Matrix) *Matrix {
 	if a.row != b.row {
 		panic("Augment error!")
@@ -167,6 +169,9 @@ func MatrixAugment(a *Matrix, b *Matrix) *Matrix {
 	return m
 }
 
+//stack the double matrix
+//eg [ A
+//     B ]
 func MatrixStack(a *Matrix, b *Matrix) *Matrix {
 	if a.row != b.row {
 		panic("Stack error!")
