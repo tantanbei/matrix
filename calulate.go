@@ -2,13 +2,13 @@ package matrix
 
 //addition the some matrix
 //eg D = A + B + C
-func Addition(m ...*Matrix) *Matrix {
+func Addition(m ...*matrix) *matrix {
 	for i := 1; i < len(m); i++ {
 		if m[i].col != m[i-1].col || m[i].row != m[i-1].row {
 			panic("Matrixs have different size")
 		}
 	}
-	mat := new(Matrix)
+	mat := new(matrix)
 	mat.col = m[0].col
 	mat.row = m[0].row
 
@@ -29,13 +29,13 @@ func Addition(m ...*Matrix) *Matrix {
 
 //subtraction the matrix in order
 //eg D = A - B - C
-func Subtraction(m ...*Matrix) *Matrix {
+func Subtraction(m ...*matrix) *matrix {
 	for i := 1; i < len(m); i++ {
 		if m[i].col != m[i-1].col || m[i].row != m[i-1].row {
 			panic("Matrixs have different size")
 		}
 	}
-	mat := new(Matrix)
+	mat := new(matrix)
 	mat.col = m[0].col
 	mat.row = m[0].row
 
@@ -56,11 +56,11 @@ func Subtraction(m ...*Matrix) *Matrix {
 
 //multiplication the double matrix
 //eg C = A * B
-func Multiplication(a *Matrix, b *Matrix) *Matrix {
+func Multiplication(a *matrix, b *matrix) *matrix {
 	if a.col != b.row {
 		panic("Can not matrix multiplication!")
 	}
-	m := new(Matrix)
+	m := new(matrix)
 	m.row = a.row
 	m.col = b.col
 
@@ -83,8 +83,8 @@ func Multiplication(a *Matrix, b *Matrix) *Matrix {
 //transpose this matrix
 //the original matrix can not change
 //eg B = AT(transpose)
-func (m Matrix) Transpose() *Matrix {
-	mT := new(Matrix)
+func (m matrix) Transpose() *matrix {
+	mT := new(matrix)
 	mT.col = m.row
 	mT.row = m.col
 	for j := 0; j < m.col; j++ {
@@ -100,8 +100,8 @@ func (m Matrix) Transpose() *Matrix {
 //negative this matrix
 //the original matrix can not change
 //eg B = -A
-func (m *Matrix) Negative() *Matrix {
-	mN := new(Matrix)
+func (m *matrix) Negative() *matrix {
+	mN := new(matrix)
 	mN.col = m.col
 	mN.row = m.row
 	for i := 0; i < m.row; i++ {
@@ -116,8 +116,8 @@ func (m *Matrix) Negative() *Matrix {
 
 //copy this matrix
 //the original can not change
-func (m *Matrix) Copy() *Matrix {
-	mC := new(Matrix)
+func (m *matrix) Copy() *matrix {
+	mC := new(matrix)
 	mC.col = m.col
 	mC.row = m.row
 	for i := 0; i < mC.row; i++ {
@@ -132,8 +132,8 @@ func (m *Matrix) Copy() *Matrix {
 
 //the matrix add a float
 //eg B = A + 0.5
-func MatrixAddFloat(a *Matrix, b float64) *Matrix {
-	m := new(Matrix)
+func MatrixAddFloat(a *matrix, b float64) *matrix {
+	m := new(matrix)
 	m.col = a.col
 	m.row = a.row
 	for i := 0; i < m.row; i++ {
@@ -148,11 +148,11 @@ func MatrixAddFloat(a *Matrix, b float64) *Matrix {
 
 //augment the double matrix
 //eg [a b]
-func MatrixAugment(a *Matrix, b *Matrix) *Matrix {
+func MatrixAugment(a *matrix, b *matrix) *matrix {
 	if a.row != b.row {
 		panic("Augment error!")
 	}
-	m := new(Matrix)
+	m := new(matrix)
 	m.col = a.col + b.col
 	m.row = a.row
 	for i := 0; i < m.row; i++ {
@@ -172,11 +172,11 @@ func MatrixAugment(a *Matrix, b *Matrix) *Matrix {
 //stack the double matrix
 //eg [ A
 //     B ]
-func MatrixStack(a *Matrix, b *Matrix) *Matrix {
+func MatrixStack(a *matrix, b *matrix) *matrix {
 	if a.row != b.row {
 		panic("Stack error!")
 	}
-	m := new(Matrix)
+	m := new(matrix)
 	m.col = a.col
 	m.row = a.row + b.row
 	for i := 0; i < m.row; i++ {

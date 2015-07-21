@@ -6,8 +6,8 @@ import (
 )
 
 //initial a new matrix by [][]float64
-func NewMatrix(data [][]float64) *Matrix {
-	m := new(Matrix)
+func NewMatrix(data [][]float64) *matrix {
+	m := new(matrix)
 	m.realData = data
 	m.row = len(data)
 	m.col = len(data[0])
@@ -18,30 +18,31 @@ func NewMatrix(data [][]float64) *Matrix {
 //arg[0] : row of the matrix
 //arg[1] : col of the matrix
 //if arg only one , there is a n*n matrix
-func NewMatrixZeros(arg ...int) *Matrix {
+func NewMatrixZeros(arg ...int) *matrix {
 	if len(arg) > 2 {
 		panic("imput error!")
 	}
-	m := new(Matrix)
+	m := new(matrix)
 	if len(arg) == 1 {
-		for i := 0; i < arg[0]; i++ {
-			row := make([]float64, 0)
-			for j := 0; j < arg[0]; j++ {
-				row = append(row, 0)
-			}
-			m.realData = append(m.realData, row)
+		if arg[0] < 1 {
+			panic("imput error!")
 		}
+		m.row = arg[0]
+		m.col = arg[0]
 	} else {
-		for i := 0; i < arg[0]; i++ {
-			row := make([]float64, 0)
-			for j := 0; j < arg[1]; j++ {
-				row = append(row, 0)
-			}
-			m.realData = append(m.realData, row)
+		if arg[0] < 1 || arg[1] < 1 {
+			panic("imput error!")
 		}
+		m.row = arg[0]
+		m.col = arg[1]
 	}
-	m.row = len(m.realData)
-	m.col = len(m.realData[0])
+	for i := 0; i < m.row; i++ {
+		row := make([]float64, 0)
+		for j := 0; j < m.col; j++ {
+			row = append(row, 0)
+		}
+		m.realData = append(m.realData, row)
+	}
 	return m
 }
 
@@ -49,30 +50,31 @@ func NewMatrixZeros(arg ...int) *Matrix {
 //arg[0] : row of the matrix
 //arg[1] : col of the matrix
 //if arg only one , there is a n*n matrix
-func NewMatrixOnes(arg ...int) *Matrix {
+func NewMatrixOnes(arg ...int) *matrix {
 	if len(arg) > 2 {
 		panic("imput error!")
 	}
-	m := new(Matrix)
+	m := new(matrix)
 	if len(arg) == 1 {
-		for i := 0; i < arg[0]; i++ {
-			row := make([]float64, 0)
-			for j := 0; j < arg[0]; j++ {
-				row = append(row, 1)
-			}
-			m.realData = append(m.realData, row)
+		if arg[0] < 1 {
+			panic("imput error!")
 		}
+		m.row = arg[0]
+		m.col = arg[0]
 	} else {
-		for i := 0; i < arg[0]; i++ {
-			row := make([]float64, 0)
-			for j := 0; j < arg[1]; j++ {
-				row = append(row, 1)
-			}
-			m.realData = append(m.realData, row)
+		if arg[0] < 1 || arg[1] < 1 {
+			panic("imput error!")
 		}
+		m.row = arg[0]
+		m.col = arg[1]
 	}
-	m.row = len(m.realData)
-	m.col = len(m.realData[0])
+	for i := 0; i < m.row; i++ {
+		row := make([]float64, 0)
+		for j := 0; j < m.col; j++ {
+			row = append(row, 1)
+		}
+		m.realData = append(m.realData, row)
+	}
 	return m
 }
 
@@ -80,49 +82,60 @@ func NewMatrixOnes(arg ...int) *Matrix {
 //arg[0] : row of the matrix
 //arg[1] : col of the matrix
 //if arg only one , there is a n*n matrix
-func NewMatrixEye(arg ...int) *Matrix {
+func NewMatrixEye(arg ...int) *matrix {
 	if len(arg) > 2 {
 		panic("imput error!")
 	}
-	m := new(Matrix)
+	m := new(matrix)
 	if len(arg) == 1 {
-		for i := 0; i < arg[0]; i++ {
-			row := make([]float64, 0)
-			for j := 0; j < arg[0]; j++ {
-				if j == i {
-					row = append(row, 1)
-				} else {
-					row = append(row, 0)
-				}
-			}
-			m.realData = append(m.realData, row)
+		if arg[0] < 1 {
+			panic("imput error!")
 		}
+		m.row = arg[0]
+		m.col = arg[0]
 	} else {
-		for i := 0; i < arg[0]; i++ {
-			row := make([]float64, 0)
-			for j := 0; j < arg[1]; j++ {
-				if j == i {
-					row = append(row, 1)
-				} else {
-					row = append(row, 0)
-				}
-			}
-			m.realData = append(m.realData, row)
+		if arg[0] < 1 || arg[1] < 1 {
+			panic("imput error!")
 		}
+		m.row = arg[0]
+		m.col = arg[1]
 	}
-	m.row = len(m.realData)
-	m.col = len(m.realData[0])
+	for i := 0; i < m.row; i++ {
+		row := make([]float64, 0)
+		for j := 0; j < m.col; j++ {
+			if j == i {
+				row = append(row, 1)
+			} else {
+				row = append(row, 0)
+			}
+		}
+		m.realData = append(m.realData, row)
+	}
 	return m
 }
 
 //initial a normal matrix
-func NewMatrixNormal(row, col int) *Matrix {
-	if row < 1 || col < 1 {
-		panic("create random matrix error!")
+//arg[0] : row of the matrix
+//arg[1] : col of the matrix
+//if arg only one , there is a n*n matrix
+func NewMatrixNormal(arg ...int) *matrix {
+	if len(arg) > 2 {
+		panic("imput error!")
 	}
-	m := new(Matrix)
-	m.col = col
-	m.row = row
+	m := new(matrix)
+	if len(arg) == 1 {
+		if arg[0] < 1 {
+			panic("imput error!")
+		}
+		m.col = arg[0]
+		m.row = arg[0]
+	} else {
+		if arg[0] < 1 || arg[1] < 1 {
+			panic("imput error!")
+		}
+		m.row = arg[0]
+		m.col = arg[1]
+	}
 	for i := 0; i < m.row; i++ {
 		row := make([]float64, 0)
 		for j := 0; j < m.col; j++ {
@@ -134,11 +147,11 @@ func NewMatrixNormal(row, col int) *Matrix {
 }
 
 //initial a diagonal matrix by []floate64
-func NewMatrixDiagonal(data []float64) *Matrix {
+func NewMatrixDiagonal(data []float64) *matrix {
 	if len(data) < 1 {
 		panic("create diagonal matrix error!")
 	}
-	m := new(Matrix)
+	m := new(matrix)
 	m.col = len(data)
 	m.row = len(data)
 	for i := 0; i < m.row; i++ {
@@ -158,7 +171,7 @@ func NewMatrixDiagonal(data []float64) *Matrix {
 //initial a matrix by matlab protocal
 //eg [1 2;2 3;3 4]
 //   [1,2;2,3;3,4]
-func NewMatrixByMatlab(cmd string) *Matrix {
+func NewMatrixByMatlab(cmd string) *matrix {
 	rn := []rune(cmd)
 	if rn[0] != '[' || rn[len(rn)-1] != ']' {
 		panic("create matrix by matlab error!")
@@ -166,7 +179,7 @@ func NewMatrixByMatlab(cmd string) *Matrix {
 	index_start := 1
 	index_end := 1
 
-	m := new(Matrix)
+	m := new(matrix)
 	row := make([]float64, 0)
 	for i := 1; i < len(rn); i++ {
 		switch rn[i] {
