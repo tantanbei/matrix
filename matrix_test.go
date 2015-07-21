@@ -6,26 +6,38 @@ import (
 
 func TestNewMZ(T *testing.T) {
 	m := NewMatrixZeros(4)
-	PrintMatrix(m)
+	if m.realData[0][0] != 0 || m.realData[3][2] != 0 {
+		T.Error("zeros error!")
+	}
 
 	m1 := NewMatrixZeros(4, 5)
-	PrintMatrix(m1)
+	if m1.col != 5 || m1.row != 4 {
+		T.Error("zeros error")
+	}
 }
 
 func TestNewMO(T *testing.T) {
 	m := NewMatrixOnes(4)
-	PrintMatrix(m)
+	if m.realData[0][0] != 1 || m.realData[3][2] != 1 {
+		T.Error("ones error!")
+	}
 
 	m1 := NewMatrixOnes(4, 5)
-	PrintMatrix(m1)
+	if m1.col != 5 || m1.row != 4 || m1.realData[3][3] != 1 {
+		T.Error("ones error")
+	}
 }
 
 func TestNewME(T *testing.T) {
 	m := NewMatrixEye(4)
-	PrintMatrix(m)
+	if m.col != 4 || m.row != 4 || m.realData[3][2] != 0 {
+		T.Error("eye error")
+	}
 
 	m1 := NewMatrixEye(4, 5)
-	PrintMatrix(m1)
+	if m1.col != 5 || m1.row != 4 || m1.realData[3][3] != 1 {
+		T.Error("eye error")
+	}
 }
 
 func TestMatrixMultiplication(T *testing.T) {
@@ -36,8 +48,9 @@ func TestMatrixMultiplication(T *testing.T) {
 
 	c := Multiplication(a, b)
 
-	PrintMatrix(a, b)
-	PrintMatrix(c)
+	if c.col != 2 || c.row != 2 || c.realData[1][1] != 3 {
+		T.Error("multi error")
+	}
 }
 
 func TestMatrixMatrixAddition(T *testing.T) {
@@ -48,7 +61,9 @@ func TestMatrixMatrixAddition(T *testing.T) {
 
 	c := Addition(a, b)
 
-	PrintMatrix(c)
+	if c.col != 2 || c.row != 2 || c.realData[1][1] != 2.7 {
+		T.Error("add error")
+	}
 }
 
 func TestMatrixSub(T *testing.T) {
@@ -59,7 +74,9 @@ func TestMatrixSub(T *testing.T) {
 
 	c := Subtraction(a, b)
 
-	PrintMatrix(c)
+	if c.col != 2 || c.row != 2 {
+		T.Error("sub error")
+	}
 }
 
 func TestTranM(T *testing.T) {
@@ -67,7 +84,9 @@ func TestTranM(T *testing.T) {
 	a := NewMatrix(dataA)
 
 	aT := a.Transpose()
-	PrintMatrix(a, aT)
+	if aT.col != 4 || aT.row != 1 {
+		T.Error("tran error")
+	}
 }
 
 func TestNM(T *testing.T) {
@@ -75,7 +94,9 @@ func TestNM(T *testing.T) {
 	a := NewMatrix(dataA)
 
 	aN := a.Negative()
-	PrintMatrix(a, aN)
+	if aN.col != 1 || aN.row != 4 || aN.realData[0][0] != -1 {
+		T.Error("negative error")
+	}
 }
 
 func TestMutliAdd(T *testing.T) {
@@ -83,7 +104,9 @@ func TestMutliAdd(T *testing.T) {
 	b := NewMatrixOnes(4)
 	c := NewMatrixZeros(4)
 	d := Addition(a, b, c)
-	PrintMatrix(d)
+	if d.col != 4 || d.row != 4 || d.realData[3][3] != 2 {
+		T.Error("muladd error")
+	}
 }
 
 func TestMutliSub(T *testing.T) {
@@ -91,48 +114,68 @@ func TestMutliSub(T *testing.T) {
 	b := NewMatrixOnes(4)
 	c := NewMatrixZeros(4)
 	d := Subtraction(a, b, c)
-	PrintMatrix(d)
+	if d.col != 4 || d.row != 4 || d.realData[1][2] != -1 {
+		T.Error("mulsub error")
+	}
 }
 
 func TestAddFloat(T *testing.T) {
 	a := NewMatrixOnes(2)
 	b := MatrixAddFloat(a, -1.9)
-	PrintMatrix(b)
+	if b.col != 2 || b.row != 2 {
+		T.Error("addfloat error")
+	}
 }
 
 func TestAugment(T *testing.T) {
 	a := NewMatrixEye(3)
 	b := MatrixAddFloat(a, 1)
 	m := MatrixAugment(a, b)
-	PrintMatrix(m)
+	if m.col != 6 || m.row != 3 {
+		T.Error("augment error")
+	}
 }
 
 func TestStack(T *testing.T) {
 	a := NewMatrixZeros(2)
 	b := NewMatrixOnes(2)
 	m := MatrixStack(a, b)
-	PrintMatrix(m)
+	if m.col != 2 || m.row != 4 {
+		T.Error("stack error")
+	}
 }
 
 func TestCopy(T *testing.T) {
 	a := NewMatrixOnes(2)
 	m := a.Copy()
-	PrintMatrix(m)
+	if m.col != 2 || m.row != 2 || m.realData[0][0] != 1 {
+		T.Error("zeros error")
+	}
 }
 
 func TestNormal(T *testing.T) {
 	a := NewMatrixNormal(2, 4)
-	PrintMatrix(a)
+	if a.col != 4 || a.row != 2 {
+		T.Error("normal error")
+	}
 }
 
 func TestDiagonal(T *testing.T) {
 	a := []float64{1, 2, 3, 4}
 	m := NewMatrixDiagonal(a)
-	PrintMatrix(m)
+	if m.col != 4 || m.row != 4 || m.realData[3][3] != 4 {
+		T.Error("dia error")
+	}
 }
 
 func TestByMatlab(T *testing.T) {
 	m := NewMatrixByMatlab("[1 2 3;4 5 6]")
+	if m.col != 3 || m.row != 2 || m.realData[0][0] != 1 {
+		T.Error("mat error")
+	}
+
 	m1 := NewMatrixByMatlab("[1.5,2.6;3.06,4.33;5.5,6]")
-	PrintMatrix(m, m1)
+	if m1.col != 2 || m1.row != 3 || m1.realData[1][1] != 4.33 {
+		T.Error("mat error")
+	}
 }
