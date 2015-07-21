@@ -12,9 +12,10 @@ Make sure **Git is installed** on your machine and in your system's PATH.
   
 ---
 ##Usage  
-Use `matrix` just import this package and easy to initial  
-`import "github.com/tantanbei/matrix"
- m := matrix.NewMatrixEye(3)`
+Use `matrix` just import this package :  
+`import "github.com/tantanbei/matrix"`  
+and easy to initial, like :  
+`m := matrix.NewMatrixEye(3)`
 
 
 
