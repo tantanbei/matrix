@@ -83,7 +83,7 @@ func Multiplication(a *matrix, b *matrix) *matrix {
 //transpose this matrix
 //the original matrix can not change
 //eg B = AT(transpose)
-func (m matrix) Transpose() *matrix {
+func (m *matrix) Transpose() *matrix {
 	mT := new(matrix)
 	mT.col = m.row
 	mT.row = m.col

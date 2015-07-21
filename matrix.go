@@ -32,7 +32,7 @@ func (m *matrix) NumElements() int {
 	return m.row * m.col
 }
 
-func (m *matrix) Nil() bool {
+func (m *matrix) IsNil() bool {
 	return m == nil
 }
 
